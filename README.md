@@ -1,2 +1,12 @@
-# Apollo_Client_Server_Demo
-A simplified demo of GraphQL architecture using Apollo Client (React) + Apollo Server (Node)
+# Overview
+A simplified demo of GraphQL architecture adopting Apollo 
+
+# Description
+## Client
+### Environment
+React + Apollo Client
+
+## Server
+### Environment
+Node + Apollo Server
+
