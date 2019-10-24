@@ -4,9 +4,11 @@ import { useQuery } from '@apollo/react-hooks';
 
 const GET_DOGS = gql(`
     {
-        dog (breed: "airedale") {
+        dog (breed: "bluetick") {
             id
             breed,
+            displayImage,
+            subbreeds
             images {
                 id
                 url
