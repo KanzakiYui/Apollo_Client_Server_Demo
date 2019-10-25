@@ -4,7 +4,7 @@ import { render } from "react-dom";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 
-import Dog from './dog';
+import AllDogsOptions from './all-dogs-options';
 
 const client = new ApolloClient({
   uri: `http://localhost:4000/`
@@ -12,7 +12,7 @@ const client = new ApolloClient({
 
 const App = () => (
     <ApolloProvider client={client}>
-      <Dog />
+      <AllDogsOptions />
     </ApolloProvider>
 );
 
