@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import DogPhoto from './dog-photo';
 
 const GET_ALL_DOGS = gql(`
-    {
+    query GetAllDogsInfo {
         dogs {
             id
             breed

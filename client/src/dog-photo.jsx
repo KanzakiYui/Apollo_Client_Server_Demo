@@ -2,8 +2,10 @@ import React from "react";
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
+// query is operation type (query, mutation, subscription)
+// QueryDogPhotoByBreed is operation name (custom label)
 const GET_DOG_PHOTO = gql(`
-    query myCustomQuery01 ($breed : String!) {
+    query GetDogPhotoByBreed ($breed : String!) {
         dog(breed: $breed) {
             id
             displayImage
