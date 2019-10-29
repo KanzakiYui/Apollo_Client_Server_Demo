@@ -14,16 +14,18 @@ const GET_DOG_PHOTO = gql(`
 `);
 
 const DogPhoto = ({ breed }) => {
-  const { loading, error, data } = useQuery(GET_DOG_PHOTO, {
-    variables: { breed },
-  });
+    const { loading, error, data } = useQuery(GET_DOG_PHOTO, {
+        variables: { breed },       // variables will be passed into query string
+        displayName: 'QueryDogPhotoByBreed',
+        skip: !breed  // skip the entrie query when !breed = ture => breed undefined
+    });
 
-  if (loading) return null;
-  if (error) return `Error! ${error}`;
+    if (loading || !data) return null;
+    if (error) return `Error! ${error}`;
 
-  return (
-    <img src={data.dog.displayImage} alt='' />
-  );
+    return (
+        <img src={data.dog.displayImage} alt='' />
+    );
 }
 
 export default DogPhoto;
