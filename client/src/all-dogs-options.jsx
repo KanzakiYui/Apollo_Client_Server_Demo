@@ -16,9 +16,19 @@ const GET_ALL_DOGS = gql(`
 const pollInterval = 1000;
 
 const AllDogsOptions = () => {
-    const {data, loading, error, refetch, startPolling, stopPolling} = useQuery(GET_ALL_DOGS, {
-        displayName: 'QueryAllDogsInfo',    // in React-Devtool
-        pollInterval: 0, // interval = 0 means no poll, poll can be used make cache up to date.
+    const {
+        data,
+        loading,
+        error,
+        refetch,
+        startPolling,
+        stopPolling,
+        networkStatus
+    } = useQuery(GET_ALL_DOGS, {
+        // interval = 0 means no poll, poll can be used make cache up to date.
+        pollInterval: 0,
+        // will re-render component every time network status changed
+        notifyOnNetworkStatusChange: true 
     });
 
     const [currentDogOption, updateDogOption ] = useState('');
@@ -28,27 +38,37 @@ const AllDogsOptions = () => {
         }
     }, [data, currentDogOption]);
 
-    if(loading || !data) return <h1>Loading...</h1>;
-    else if(error) return <h1>Error!</h1>;
-    const allOptions = data.dogs.map(({id, breed}) =>
-        <option key={id} value={breed}>{breed}</option>
-    );
+    let content = null;
 
-    const onChange = event => updateDogOption(event.target.value);
-    const onStartPoll = () => startPolling(pollInterval);
-    const onRefetch = () => refetch();
-
+    if(loading || !data) {
+        if (networkStatus === 4) content = <h1>Refetching...</h1>;
+        else content = <h1>Loading...</h1>;
+    }
+    else if(error) content = <h1>Error!</h1>;
+    else {
+        const allOptions = data.dogs.map(({id, breed}) =>
+            <option key={id} value={breed}>{breed}</option>
+        );
+        const onChange = event => updateDogOption(event.target.value);
+        const onStartPoll = () => startPolling(pollInterval);
+        const onRefetch = () => refetch();
+        content = (
+            <React.Fragment>
+                <select value={currentDogOption} onChange={onChange}>
+                    {allOptions}
+                </select>
+                <DogPhoto breed={currentDogOption} />
+                <div id='all-dog-options-actions'>
+                    <button onClick={onRefetch}>Refetch</button>
+                    <button onClick={onStartPoll}>Start Polling</button>
+                    <button onClick={stopPolling}>Stop Polling</button>
+                </div>
+            </React.Fragment>
+        );
+    }
     return (
         <div id='all-dog-options'>
-            <select value={currentDogOption} onChange={onChange}>
-                {allOptions}
-            </select>
-            <DogPhoto breed={currentDogOption} />
-            <div id='all-dog-options-actions'>
-                <button onClick={onRefetch}>Refetch</button>
-                <button onClick={onStartPoll}>Start Polling</button>
-                <button onClick={stopPolling}>Stop Polling</button>
-            </div>
+            {content}
         </div>
     )
 };

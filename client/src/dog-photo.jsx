@@ -15,13 +15,14 @@ const GET_DOG_PHOTO = gql(`
 
 const DogPhoto = ({ breed }) => {
     const { loading, error, data } = useQuery(GET_DOG_PHOTO, {
-        variables: { breed },       // variables will be passed into query string
-        displayName: 'QueryDogPhotoByBreed',
-        skip: !breed  // skip the entrie query when !breed = ture => breed undefined
+        // variables will be passed into query string
+        variables: { breed },       
+        // skip the entrie query when !breed = ture => breed undefined
+        skip: !breed 
     });
 
-    if (loading || !data) return null;
-    if (error) return `Error! ${error}`;
+    if (loading || !data) return <h3>Loading...</h3>;
+    if (error) return <h3>Error!</h3>;
 
     return (
         <img src={data.dog.displayImage} alt='' />
