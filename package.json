@@ -12,7 +12,7 @@
   "dependencies": {
     "apollo-server": "^2.14.2",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "shorthash": "0.0.2"
   }
 }
